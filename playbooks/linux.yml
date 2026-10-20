@@ -1,25 +1,39 @@
 ---
-- name: Configuration de base des serveurs Linux
+- name: Configuration et administration de LINUX01
   hosts: linux
   become: true
-  tasks:
-    - name: Mettre à jour le cache APT
-      ansible.builtin.apt:
-        update_cache: yes
-        cache_valid_time: 3600
 
-    - name: Installer les paquets de base
+  tasks:
+    - name: Mettre à jour le cache apt
       ansible.builtin.apt:
-        name:
-          - curl
-          - git
-          - htop
-          - ufw
+        update_cache: true
+
+    - name: Installer un serveur web (Nginx)
+      ansible.builtin.apt:
+        name: nginx
         state: present
 
-    - name: S'assurer que le service node_exporter est actif et démarré
+    - name: S'assurer que Nginx est démarré et activé
+      ansible.builtin.systemd:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Créer un point de montage pour le stockage de test
+      ansible.builtin.file:
+        path: /mnt/data
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Installer l'agent de supervision node_exporter
+      ansible.builtin.apt:
+        name: prometheus-node-exporter
+        state: present
+
+    - name: Démarrer et activer node_exporter
       ansible.builtin.systemd:
         name: node_exporter
         state: started
-        enabled: yes
-      ignore_errors: true
+        enabled: true
