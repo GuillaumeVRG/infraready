@@ -24,19 +24,19 @@ Ce dépôt centralise l'ensemble des scripts, playbooks Ansible, configurations 
 ---
 
 ## 🏗️ Architecture Technique
-L'infrastructure repose sur un laboratoire virtualisé interconnecté sur le réseau local `192.168.50.0/24`[cite: 15] :
+L'infrastructure repose sur un laboratoire virtualisé interconnecté sur le réseau local `192.168.50.0/24` :
 
 | Machine | Système d'Exploitation | Rôle Principal | Adresse IP |
 | :--- | :--- | :--- | :--- |
-| **OPS01** | Ubuntu Server 24.04 LTS | Contrôleur Ansible, Git, Prometheus & Grafana[cite: 15] | `192.168.50.30`[cite: 15] |
-| **LINUX01** | Ubuntu Server 24.04 LTS | Services Linux, Node Exporter, Maintenance `apt`[cite: 15] | `192.168.50.20`[cite: 15] |
-| **WIN-DC01** | Windows Server 2025 | Active Directory Domain Services (AD DS), DNS[cite: 15] | `192.168.50.10`[cite: 15] |
+| **OPS01** | Ubuntu Server 24.04 LTS | Contrôleur Ansible, Git, Prometheus & Grafana | `192.168.50.30` |
+| **LINUX01** | Ubuntu Server 24.04 LTS | Services Linux, Node Exporter, Maintenance `apt` | `192.168.50.20` |
+| **WIN-DC01** | Windows Server 2025 | Active Directory Domain Services (AD DS), DNS | `192.168.50.10` |
 
 ---
 
 ## 🔒 Sécurité & Gestion des Secrets
-* **Ansible Vault :** Les identifiants sensibles et paramètres de connexion WinRM sont chiffrés (`group_vars/windows.yml`)[cite: 19, 20]. Aucun mot de passe en clair n'est présent sur le dépôt[cite: 20].
-* **CI/CD :** Un workflow GitHub Actions (`.github/workflows/validate.yml`) valide automatiquement la syntaxe YAML et les playbooks à chaque `push`[cite: 16, 19].
+* **Ansible Vault :** Les identifiants sensibles et paramètres de connexion WinRM sont chiffrés (`group_vars/windows.yml`). Aucun mot de passe en clair n'est présent sur le dépôt.
+* **CI/CD :** Un workflow GitHub Actions (`.github/workflows/validate.yml`) valide automatiquement la syntaxe YAML et les playbooks à chaque `push`.
 
 ---
 
