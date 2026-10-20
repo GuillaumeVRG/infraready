@@ -1,17 +1,36 @@
 ---
-- name: Configuration et administration de LINUX01
+- name: Configuration et administration complète de LINUX01
   hosts: linux
   become: true
 
   tasks:
-    - name: Mettre à jour le cache apt
-      ansible.builtin.apt:
-        update_cache: true
+    - name: 1. Gestion des groupes système et utilisateurs
+      ansible.builtin.group:
+        name: sysadmins
+        state: present
 
-    - name: Installer un serveur web (Nginx)
+    - name: Créer un utilisateur administrateur applicatif
+      ansible.builtin.user:
+        name: adminapp
+        comment: "Administrateur Applicatif"
+        group: sysadmins
+        shell: /bin/bash
+        create_home: true
+        state: present
+
+    - name: 2. Configuration des permissions sur un répertoire de travail
+      ansible.builtin.file:
+        path: /var/www/html/app
+        state: directory
+        owner: adminapp
+        group: sysadmins
+        mode: '0750'
+
+    - name: 3. Installation et gestion du service applicatif (Nginx)
       ansible.builtin.apt:
         name: nginx
         state: present
+        update_cache: true
 
     - name: S'assurer que Nginx est démarré et activé
       ansible.builtin.systemd:
@@ -19,7 +38,7 @@
         state: started
         enabled: true
 
-    - name: Créer un point de montage pour le stockage de test
+    - name: 4. Gestion du stockage et point de montage de test
       ansible.builtin.file:
         path: /mnt/data
         state: directory
@@ -27,7 +46,7 @@
         group: root
         mode: '0755'
 
-    - name: Installer l'agent de supervision node_exporter
+    - name: 5. Installation et supervision (Node Exporter)
       ansible.builtin.apt:
         name: prometheus-node-exporter
         state: present
@@ -37,3 +56,12 @@
         name: node_exporter
         state: started
         enabled: true
+
+    - name: 6. Consultation et vérification des journaux système (Journald)
+      ansible.builtin.shell: journalctl -u nginx --no-pager -n 20
+      register: nginx_logs
+      changed_when: false
+
+    - name: Afficher un extrait des journaux Nginx
+      ansible.builtin.debug:
+        msg: "{{ nginx_logs.stdout_lines }}"
