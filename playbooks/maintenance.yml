@@ -24,3 +24,20 @@
       ansible.builtin.systemd:
         name: node_exporter
         state: started
+
+- name: Maintenance et mises à jour de WIN-DC01
+  hosts: windows
+  gather_facts: false
+
+  tasks:
+    - name: Rechercher et installer les mises à jour Windows (Critical & Security)
+      ansible.windows.win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+        reboot: false
+      register: update_result
+
+    - name: Afficher le résultat des mises à jour Windows
+      ansible.builtin.debug:
+        var: update_result

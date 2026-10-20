@@ -1,13 +1,11 @@
 # Procédure de Maintenance et Mises à Jour - InfraReady
 
-## 1. Maintenance Automatise Linux (LINUX01 & OPS01)
+## 1. Maintenance Automatisée Linux (LINUX01)
 
-Les mises à jour des serveurs Linux sont automatisées à l'aide d'Ansible.
+### Précautions :
+- Réaliser un snapshot VMware de la VM `LINUX01`.
+- S'assurer de la viabilité des services avant exécution.
 
-### Précautions avant exécution :
-- Réaliser un snapshot VMware de la VM `LINUX01` avant toute mise à jour majeure.
-- Vérifier qu'aucun traitement critique n'est en cours.
-
-### Exécution du playbook :
+### Exécution Ansible :
 ```bash
-ansible-playbook -i inventory/hosts.yml playbooks/maintenance.yml
+ansible-playbook -i inventory/hosts.yml playbooks/maintenance.yml -K
