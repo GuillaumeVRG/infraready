@@ -29,7 +29,7 @@ L'infrastructure repose sur un laboratoire virtualisé interconnecté sur le ré
 | Machine | Système d'Exploitation | Rôle Principal | Adresse IP |
 | :--- | :--- | :--- | :--- |
 | **OPS01** | Ubuntu Server 24.04 LTS | Contrôleur Ansible, Git, Prometheus & Grafana | `192.168.50.30` |
-| **LINUX01** | Ubuntu Server 24.04 LTS | Services Linux, Node Exporter, Maintenance `apt` | `192.168.50.20` |
+| **LINUX01** | Ubuntu Server 24.04 LTS | Services Linux, Nginx, Stockage, Node Exporter | `192.168.50.20` |
 | **WIN-DC01** | Windows Server 2025 | Active Directory Domain Services (AD DS), DNS | `192.168.50.10` |
 
 ---
