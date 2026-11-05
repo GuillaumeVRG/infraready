@@ -12,7 +12,9 @@
 2. **Test de connectivité direct (OPS01) :**
    - Test d'envoi d'un message manuel via `curl` depuis la machine `OPS01` vers le Webhook Discord :
      ```bash
-     curl -H "Content-Type: application/json" -X POST -d '{"content":"Test alerte"}' [https://discord.com/api/webhooks/1562011139661897739/gkCjev00UzZgaNS0oZ1AAcx9K8CsXX4-iEiWeRAGDhgggln3QVR_72qaP0vaitoQrr9m](https://discord.com/api/webhooks/1562011139661897739/gkCjev00UzZgaNS0oZ1AAcx9K8CsXX4-iEiWeRAGDhgggln3QVR_72qaP0vaitoQrr9m)
+     curl -H "Content-Type: application/json" -X POST -d '{"content":"Test alerte"}'
+     [webhook]
+     (webhook)
      ```
 
 ## 3. Cause Identifiée
