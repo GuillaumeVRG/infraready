@@ -11,6 +11,13 @@
         autoremove: true
         autoclean: true
 
+    - name: Planifier les mises à jour automatiques quotidiennes à 12h
+      ansible.builtin.cron:
+        name: "Mises à jour automatiques systeme"
+        minute: "0"
+        hour: "12"
+        job: "apt-get update && apt-get upgrade -y && apt-get autoremove -y"
+
     - name: Vérifier l'espace disque disponible
       ansible.builtin.command: df -h /
       register: disk_space
